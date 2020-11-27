@@ -1,0 +1,82 @@
+>> help BM3D
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+   BM3D is an algorithm for attenuation of additive white Gaussian noise from 
+   grayscale images. This algorithm reproduces the results from the article:
+ 
+   [1] K. Dabov, A. Foi, V. Katkovnik, and K. Egiazarian, "Image Denoising 
+       by Sparse 3D Transform-Domain Collaborative Filtering," 
+       IEEE Transactions on Image Processing, vol. 16, no. 8, August, 2007.
+       preprint at http://www.cs.tut.fi/~foi/GCF-BM3D.
+ 
+ 
+   FUNCTION INTERFACE:
+ 
+   [PSNR, y_est] = BM3D(y, z, sigma, profile, print_to_screen)
+ 
+   ! The function can work without any of the input arguments, 
+    in which case, the internal default ones are used !
+  
+   BASIC USAGE EXAMPLES:
+ 
+      Case 1) Using the default parameters (i.e., image name, sigma, etc.)
+  
+       [PSNR, y_est] = BM3D;
+  
+      Case 2) Using an external noisy image:
+ 
+       % Read a grayscale image and scale its intensities in range [0,1]
+       y = im2double(imread('Cameraman256.png')); 
+       % Generate the same seed used in the experimental results of [1]
+       randn('seed', 0);
+       % Standard deviation of the noise --- corresponding to intensity 
+       %  range [0,255], despite that the input was scaled in [0,1]
+       sigma = 25;
+       % Add the AWGN with zero mean and standard deviation 'sigma'
+       z = y + (sigma/255)*randn(size(y));
+       % Denoise 'z'. The denoised image is 'y_est', and 'NA = 1' because 
+       %  the true image was not provided
+       [NA, y_est] = BM3D(1, z, sigma); 
+       % Compute the putput PSNR
+       PSNR = 10*log10(1/mean((y(:)-y_est(:)).^2))
+       % show the noisy image 'z' and the denoised 'y_est'
+       figure; imshow(z);   
+       figure; imshow(y_est);
+  
+      Case 3) If the original image y is provided as the first input 
+       argument, then some additional information is printed (PSNRs, 
+       figures, etc.). That is, "[NA, y_est] = BM3D(1, z, sigma);" in the
+       above code should be replaced with:
+  
+       [PSNR, y_est] = BM3D(y, z, sigma);
+  
+  
+   INPUT ARGUMENTS (OPTIONAL):
+ 
+      1) y (matrix M x N): Noise-free image (needed for computing PSNR),
+                            replace with the scalar 1 if not available.
+      2) z (matrix M x N): Noisy image (intensities in range [0,1] or [0,255])
+      3) sigma (double)  : Std. dev. of the noise (corresponding to intensities
+                           in range [0,255] even if the range of z is [0,1])
+      4) profile (char)  : 'np' --> Normal Profile 
+                           'lc' --> Fast Profile
+      5) print_to_screen : 0 --> do not print output information (and do 
+                                 not plot figures)
+                           1 --> print information and plot figures
+ 
+   OUTPUTS:
+      1) PSNR (double)          : Output PSNR (dB), only if the original 
+                                  image is available, otherwise PSNR = 0                                               
+      2) y_est (matrix M x N): Final estimate (in the range [0,1])
+ 
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
+  Copyright (c) 2006-2011 Tampere University of Technology.
+  All rights reserved.
+  This work should only be used for nonprofit purposes.
+ 
+  AUTHORS:
+      Kostadin Dabov, email: dabov _at_ cs.tut.fi
+ 
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
