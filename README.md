@@ -22,7 +22,7 @@ Test| main_test.py çalıştırılır.|
 Kütüphaneler| tensorflow, keras2, numpy, opencv|
 Dosyalar| data_generator.py, main_test.py, main_train.py|
 Dizin| /data/Test/Set12|
-|/data/Test/Set68|
-|/data/Train400|
-|/models/DnCNNsigma25|
-|/results/|
+ |/data/Test/Set68|
+ |/data/Train400|
+ |/models/DnCNNsigma25|
+ |/results/|
