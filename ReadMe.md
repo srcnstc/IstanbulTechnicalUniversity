@@ -1,4 +1,4 @@
-# Master Thesis
+# Master Thesis, Image Denoising with Deep Learning
 
 # version 1.0.0
 It covers the Noise Removal in Image project. Change Registration: 27.11.2020
