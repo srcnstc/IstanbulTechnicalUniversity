@@ -1,4 +1,4 @@
-# BitirmeTezi
+# Bitirme Tezi, Derin Öğrenme ile Görüntüde Gürültü Giderme
 
 # version 1.0.0
 İmgede Gürültü Giderme çalışmalarını kapsamaktadır. Değişiklik Kayıt: 27.11.2020
